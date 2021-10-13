@@ -13,7 +13,9 @@ object Main extends App {
     "((1020)*(3+(2-5)))" -> 0.0
   )
 
-  for ((exp, result) <- test) {
-    assert(computeRpn(rpn(exp.toCharArray.iterator)) - result < 0.0000000000001)
+  for ((expression, expected) <- test) {
+    val result = computeRpn(rpn(expression.toCharArray.iterator))
+    println(s"$expression=$result, expected $expected")
+    assert(result - expected < 0.0000000000001)
   }
 }
