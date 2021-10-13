@@ -1,3 +1,4 @@
+import ExpressionTree.{Node, postorder, compute}
 import RnpCalculator.{computeRpn, rpn}
 
 object Main extends App {
@@ -13,8 +14,17 @@ object Main extends App {
     "((1020)*(3+(2-5)))" -> 0.0
   )
 
+  println("rpn method")
+    for ((expression, expected) <- test) {
+      val result = computeRpn(rpn(expression.toCharArray.iterator))
+      println(s"$expression=$result, expected $expected")
+      assert(result - expected < 0.0000000000001)
+    }
+
+  println()
+  println("expression tree method")
   for ((expression, expected) <- test) {
-    val result = computeRpn(rpn(expression.toCharArray.iterator))
+    val result = compute(Node.build(expression))
     println(s"$expression=$result, expected $expected")
     assert(result - expected < 0.0000000000001)
   }
